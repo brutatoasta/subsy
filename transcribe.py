@@ -41,7 +41,13 @@ def transcribe_audio_safe(path:str):
 # a function that splits the audio file into chunks on silence
 def save_chunks_on_silence(path:str):
     """Splitting the large audio file into wav chunks"""
-    path = Path(path)
+    path = Path(path).resolve()
+    folder_name = path.parent / path.stem / "audio-chunks"
+    # create a directory to store the audio chunks
+    if not folder_name.is_dir():
+        folder_name.mkdir(parents=True)
+
+    chunk_names = []
     # open the audio file using pydub
     sound = AudioSegment.from_file(path)  
     # split audio sound where silence is 500 miliseconds or more and get chunks
@@ -53,12 +59,8 @@ def save_chunks_on_silence(path:str):
         # keep the silence for 1 second, adjustable as well
         keep_silence=500,
     )
-    chunk_names = []
-    folder_name = path / "audio-chunks"
-    # create a directory to store the audio chunks
-    if not os.path.isdir(folder_name):
-        os.mkdir(folder_name)
-
+    print("split ok")
+    
     # process each chunk 
     for i, audio_chunk in enumerate(chunks, start=1):
         # export audio chunk and save it in
