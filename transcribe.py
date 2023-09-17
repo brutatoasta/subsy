@@ -34,7 +34,7 @@ def transcribe_audio_safe(path: str):
     try:
         text = transcribe_audio(path)
     except sr.UnknownValueError as e:
-        print("Error:", str(e))
+        print("Error: ", str(e))
     else:
         print(path, ":", text)
 
@@ -45,7 +45,7 @@ def transcribe_audio_safe(path: str):
 def save_chunks_on_silence(path: str):
     """Splitting the large audio file into wav chunks"""
     path = Path(path).resolve()
-    folder_name = path.parent / path.stem / "audio-chunks"
+    folder_name = path.parent / "audio-chunks"
     # create a directory to store the audio chunks
     if not folder_name.is_dir():
         folder_name.mkdir(parents=True)
