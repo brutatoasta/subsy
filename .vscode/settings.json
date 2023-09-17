@@ -1,0 +1,7 @@
+{
+    "files.exclude": {
+        "**.md": true,
+        "**/.git": false,
+        "v/**": true
+    },
+}
